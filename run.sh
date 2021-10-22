@@ -1,1 +1,6 @@
-docker build . -t cru:1 && docker run --rm -i -t cru:1
+#!/usr/bin/env bash
+
+VERSION=$(date +%s)
+
+docker build . -t pythondev:${VERSION} && \
+	docker run --rm -i -t pythondev:${VERSION}
