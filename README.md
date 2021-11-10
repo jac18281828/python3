@@ -5,7 +5,7 @@ Python3 Development Container for Docker and VS Code
 Example Dockerfile - for use as builder
 
 ```
-ARG VERSION=110221
+ARG VERSION=111021
 
 FROM jac18281828/pythondev:${VERSION} as builder
 ```
