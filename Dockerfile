@@ -7,6 +7,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         apt install -y -q --no-install-recommends \
         python3 python3-pip
 
+RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m pip install --upgrade pip
