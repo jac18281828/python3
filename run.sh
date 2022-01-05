@@ -2,5 +2,7 @@
 
 VERSION=$(date +%s)
 
-docker build . -t pythondev:${VERSION} && \
-	docker run --rm -i -t pythondev:${VERSION}
+PROJECT=jac18281828/pythondev
+
+docker build . -t ${PROJECT}:${VERSION} && \
+	docker run --rm -i -t ${PROJECT}:${VERSION}
