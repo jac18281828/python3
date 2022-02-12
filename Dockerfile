@@ -4,7 +4,7 @@ FROM debian:${VERSION}
 RUN export DEBIAN_FRONTEND=noninteractive && \
         apt update && \
         apt install -y -q --no-install-recommends \
-        sudo ca-certificates curl \
+        sudo ca-certificates curl git \
         python3 python3-pip
 RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
