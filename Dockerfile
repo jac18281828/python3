@@ -5,7 +5,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         apt update && \
         apt install -y -q --no-install-recommends \
         sudo ca-certificates curl git \
-        python3 python3-pip
+        python3 python3-pip ripgrep
 RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
 
