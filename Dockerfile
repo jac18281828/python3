@@ -17,6 +17,5 @@ RUN python3 -m pip install --upgrade pip
 RUN pip3 install autopep8
 RUN pip3 install pylint
 
-
 CMD echo "Python3 Dev"
 
