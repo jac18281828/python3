@@ -1,3 +1,7 @@
+# 1.0.12 (2023-04-05)
+
+* publish on ghcr
+
 # 1.0.11 (2023-04-05)
 
 * always push on tag workflow
