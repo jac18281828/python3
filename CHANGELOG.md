@@ -1,3 +1,7 @@
+# 1.0.13 (2023-05-10)
+
+* add gpg for commit signing on codespaces
+
 # 1.0.12 (2023-04-05)
 
 * publish on ghcr
