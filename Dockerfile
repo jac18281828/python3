@@ -3,7 +3,7 @@ FROM debian:stable-slim
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt update && \
     apt install -y -q --no-install-recommends \
-    sudo ca-certificates curl git gnupg2 \
+    sudo ca-certificates curl git gnupg2 build-essential \
     python3 python3-pip ripgrep && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
