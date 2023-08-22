@@ -18,15 +18,17 @@ Key benefits of using development containers in Visual Studio Code include:
 
 To use this development container in Visual Studio Code, specify the `Dockerfile` as defined below and reopen in the Remote Containers module.
 
-### Example Dockerfile:
-
-```
-FROM jac18281828/pythondev:latest as builder
-```
-
 ### Architecture
 * linux/amd64 
 * linux/arm64
 
-Also available from [GitHub GHCR](https://github.com/jac18281828/pythondev/pkgs/container/pythondev)
+
+### Example Dockerfile
+```
+FROM jac18281828/pythondev:latest
+
+COPY . .
+
+USER jac
+```
 
