@@ -1,3 +1,7 @@
+# 1.0.16 (2023-08-29)
+
+* adding python3-venv
+
 # 1.0.15 (2023-08-11)
 
 * adding build essential

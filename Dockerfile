@@ -4,7 +4,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt update && \
     apt install -y -q --no-install-recommends \
     sudo ca-certificates curl git gnupg2 build-essential \
-    python3 python3-pip ripgrep && \
+    python3 python3-pip python3-venv ripgrep && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
