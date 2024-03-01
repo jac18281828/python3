@@ -1,3 +1,7 @@
+# 1.0.17 (2024-03-01)
+
+* name change jac18281828/python
+
 # 1.0.16 (2023-08-29)
 
 * adding python3-venv
