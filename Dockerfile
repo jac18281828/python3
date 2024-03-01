@@ -8,8 +8,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN useradd --create-home -s /bin/bash jac
-RUN usermod -a -G sudo jac
+RUN useradd --create-home -s /bin/bash py3
+RUN usermod -a -G sudo py3
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN python3 -m pip install --break-system-packages --upgrade pip

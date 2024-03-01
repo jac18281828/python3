@@ -29,6 +29,6 @@ WORKDIR /build/src
 
 COPY . .
 
-USER jac
+USER py3
 ```
 
