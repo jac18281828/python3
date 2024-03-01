@@ -23,7 +23,7 @@ To use this development container in Visual Studio Code, specify the `Dockerfile
 
 ### Example Dockerfile
 ```
-FROM jac18281828/python:latest
+FROM jac18281828/python3:latest
 
 WORKDIR /build/src
 

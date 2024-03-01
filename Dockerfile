@@ -15,6 +15,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN python3 -m pip install --break-system-packages --upgrade pip
 RUN pip3 install --break-system-packages autopep8
 RUN pip3 install --break-system-packages pylint
+RUN python3 --version
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.name="python" \
