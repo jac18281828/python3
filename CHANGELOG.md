@@ -1,6 +1,6 @@
 # 1.0.19 (2024-03-01)
 
-* name change jac18281828/python3
+* latest python
 
 # 1.0.18 (2024-03-01)
 
