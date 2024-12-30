@@ -1,3 +1,7 @@
+# 1.0.21 (2024-12-30)
+
+* remove default installs and add unzip for installers
+
 # 1.0.20 (2024-12-23)
 
 * update latest build

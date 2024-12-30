@@ -14,10 +14,20 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@latest && \
 FROM debian:stable-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt update && \
-    apt install -y -q --no-install-recommends \
-    sudo ca-certificates curl git gnupg2 build-essential \
-    python3 python3-pip python3-venv ripgrep && \
+    apt-get update && \
+    apt-get install -y -q --no-install-recommends \
+      build-essential \
+      ca-certificates \
+      curl \
+      git \
+      gnupg2 \
+      python3 \
+      python3-pip \
+      python3-venv \
+      ripgrep \
+      sudo \
+      unzip \
+    && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -31,11 +41,6 @@ COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
 ENV PATH=${PATH}:/go/bin
 
 USER py3
-
-RUN python3 -m pip install --break-system-packages --upgrade pip
-RUN pip3 install --break-system-packages autopep8
-RUN pip3 install --break-system-packages pylint
-RUN python3 --version
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.name="python" \
