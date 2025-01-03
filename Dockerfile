@@ -10,6 +10,37 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@latest && \
     strip $(which yamlfmt) && \
     yamlfmt --version
 
+# Stage 3: Build Python 3
+FROM debian:stable-slim AS py-builder
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y -q --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        checkinstall \
+        curl \
+        libbz2-dev \
+        libc6-dev \
+        libffi-dev \
+        libgdbm-dev \
+        libncursesw5-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        tk-dev \
+        zlib1g-dev \
+    && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ARG PY_VERSION=3.10.9
+
+# Install Python 3
+WORKDIR /python3
+RUN curl -sSL  https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz | tar xzf -
+WORKDIR /python3/Python-${PY_VERSION}
+RUN ./configure --enable-optimizations && \
+    make -j
+
 # Stage 2: Python Development Container
 FROM debian:stable-slim
 
@@ -19,17 +50,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       build-essential \
       ca-certificates \
       curl \
+      ed \
       git \
       gnupg2 \
-      python3 \
-      python3-pip \
-      python3-venv \
       ripgrep \
       sudo \
       unzip \
     && \
     apt clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV USER=py3    
 RUN useradd --create-home -s /bin/bash ${USER}
@@ -37,8 +66,16 @@ RUN usermod -a -G sudo ${USER}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
+COPY --chown=${USER}:${USER} --from=py-builder /python3 /python3
+
+ARG PY_VERSION=3.10.9
+WORKDIR /python3/Python-${PY_VERSION}
+RUN sudo make install && sudo make clean
 
 ENV PATH=${PATH}:/go/bin
+
+WORKDIR /home/py3
+RUN sudo rm -rf /python3
 
 USER py3
 

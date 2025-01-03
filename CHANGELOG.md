@@ -1,3 +1,7 @@
+# 3.10.9 (2025-01-03)
+
+* implement python 3.10
+
 # 1.0.21 (2024-12-30)
 
 * remove default installs and add unzip for installers
