@@ -26,19 +26,19 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         libncursesw5-dev \
         libsqlite3-dev \
         libssl-dev \
-        tk-dev \
+        pkg-config \ 
         zlib1g-dev \
     && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ARG PY_VERSION=3.10.9
+ARG PY_VERSION=3.11.9
 
 # Install Python 3
 WORKDIR /python3
 RUN curl -sSL  https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz | tar xzf -
 WORKDIR /python3/Python-${PY_VERSION}
-RUN ./configure --enable-optimizations && \
+RUN ./configure --enable-optimizations --with-pydebug --with-lto && \
     make -j
 
 # Stage 2: Python Development Container
@@ -53,6 +53,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       ed \
       git \
       gnupg2 \
+      pkg-config \
       ripgrep \
       sudo \
       unzip \
@@ -68,9 +69,9 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
 COPY --chown=${USER}:${USER} --from=py-builder /python3 /python3
 
-ARG PY_VERSION=3.10.9
+ARG PY_VERSION=3.11.9
 WORKDIR /python3/Python-${PY_VERSION}
-RUN sudo make install && sudo make clean
+RUN sudo make install
 
 ENV PATH=${PATH}:/go/bin
 
@@ -88,5 +89,3 @@ LABEL \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0" \
     org.opencontainers.image.description="Python 3 development container"
-
-

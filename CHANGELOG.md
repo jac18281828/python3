@@ -1,3 +1,7 @@
+# 3.11.9 (2025-01-03)
+
+* implement python 3.11.9
+
 # 3.10.9 (2025-01-03)
 
 * implement python 3.10
