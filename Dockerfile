@@ -10,7 +10,7 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@latest && \
     strip $(which yamlfmt) && \
     yamlfmt --version
 
-# Stage 3: Build Python 3
+# Stage 2: Build Python 3
 FROM debian:stable-slim AS py-builder
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
