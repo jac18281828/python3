@@ -5,6 +5,7 @@ on:
       - "*"
 permissions:
   contents: write
+  packages: write
 concurrency:
   group: "docker-image"
   cancel-in-progress: true
