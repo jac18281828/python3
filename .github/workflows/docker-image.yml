@@ -3,9 +3,7 @@ on:
   push:
     tags:
       - "*"
-permissions:
-  contents: write
-  packages: write
+permissions: write-all
 concurrency:
   group: "docker-image"
   cancel-in-progress: true
