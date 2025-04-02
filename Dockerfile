@@ -10,39 +10,8 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@v0.16.0 && \
     strip $(which yamlfmt) && \
     yamlfmt --version
 
-# Stage 2: Build Python 3
-FROM debian:stable-slim AS py-builder
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
-    apt-get install -y -q --no-install-recommends \
-        build-essential \
-        ca-certificates \
-        checkinstall \
-        curl \
-        libbz2-dev \
-        libc6-dev \
-        libffi-dev \
-        libgdbm-dev \
-        libncursesw5-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        pkg-config \ 
-        zlib1g-dev \
-    && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-ARG PY_VERSION=3.11.9
-
-# Install Python 3
-WORKDIR /python3
-RUN curl -sSL  https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz | tar xzf -
-WORKDIR /python3/Python-${PY_VERSION}
-RUN ./configure --enable-optimizations --with-lto --with-ensurepip=install --enable-shared && \
-    make -j LDFLAGS="-s -w"
-
 # Stage 2: Python Development Container
-FROM debian:stable-slim
+FROM python:3.11.9-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
@@ -65,14 +34,10 @@ ENV USER=py3
 RUN useradd --create-home -s /bin/bash ${USER}
 RUN usermod -a -G sudo ${USER}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
-COPY --chown=${USER}:${USER} --from=py-builder /python3 /python3
-
-ARG PY_VERSION=3.11.9
-WORKDIR /python3/Python-${PY_VERSION}
-RUN sudo make install && \
-    sudo strip $(which python3)
+    
+ENV USER=py3
+# Install yamlfmt
+COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt    
 
 ENV PATH=${PATH}:/go/bin
 
