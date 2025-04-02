@@ -1,11 +1,10 @@
 name: Docker Image Build Push CI
-permissions:
-  contents: write # Allows push access to repository contents
-  releases: write # Allows creating GitHub releases
 on:
   push:
     tags:
       - "*"
+permissions:
+  contents: write
 concurrency:
   group: "docker-image"
   cancel-in-progress: true
