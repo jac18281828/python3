@@ -38,8 +38,8 @@ ARG PY_VERSION=3.11.9
 WORKDIR /python3
 RUN curl -sSL  https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz | tar xzf -
 WORKDIR /python3/Python-${PY_VERSION}
-RUN ./configure --enable-optimizations --with-lto && \
-    make -j
+RUN ./configure --enable-optimizations --with-lto --with-ensurepip=install --enable-shared && \
+    make -j LDFLAGS="-s -w"
 
 # Stage 2: Python Development Container
 FROM debian:stable-slim
@@ -71,7 +71,8 @@ COPY --chown=${USER}:${USER} --from=py-builder /python3 /python3
 
 ARG PY_VERSION=3.11.9
 WORKDIR /python3/Python-${PY_VERSION}
-RUN sudo make install
+RUN sudo make install && \
+    sudo strip $(which python3)
 
 ENV PATH=${PATH}:/go/bin
 
