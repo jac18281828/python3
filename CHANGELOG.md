@@ -1,3 +1,7 @@
+# 3.12.10 (2025-05-11)
+
+* use prebuild python 3.12.10
+
 # 3.11.9_3 (2025-04-02)
 
 * use prebuild developer container rather than building python

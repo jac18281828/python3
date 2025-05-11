@@ -11,7 +11,7 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@v0.16.0 && \
     yamlfmt --version
 
 # Stage 2: Python Development Container
-FROM python:3.11.9-slim
+FROM python:3.12.10-slim
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
