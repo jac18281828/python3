@@ -1,3 +1,9 @@
+# 3.12.16_2 (2026-11-18)
+
+* set the version label and drop unused ARG TARGETARCH
+* create the user in one layer with a sudoers.d drop-in
+* remove the stale /python3 cleanup and trailing whitespace
+
 # 3.12.16_1 (2026-11-18)
 
 * bump yamlfmt to v0.21.0

@@ -1,8 +1,6 @@
 # Stage 1: Build yamlfmt
 FROM golang:1 AS go-builder
-# defined from build kit
 # DOCKER_BUILDKIT=1 docker build . -t ...
-ARG TARGETARCH
 
 # Install yamlfmt
 WORKDIR /yamlfmt
@@ -12,6 +10,8 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@v0.21.0 && \
 
 # Stage 2: Python Development Container
 FROM python:3.12.16-slim
+
+ARG VERSION=dev
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
@@ -30,19 +30,17 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV USER=py3    
-RUN useradd --create-home -s /bin/bash ${USER}
-RUN usermod -a -G sudo ${USER}
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-    
 ENV USER=py3
+RUN useradd --create-home --shell /bin/bash --groups sudo ${USER} && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/nopasswd && \
+    chmod 0440 /etc/sudoers.d/nopasswd
+
 # Install yamlfmt
-COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt    
+COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
 
 ENV PATH=${PATH}:/go/bin
 
 WORKDIR /home/py3
-RUN sudo rm -rf /python3
 
 USER py3
 
