@@ -1,3 +1,7 @@
+# 3.12.16 (2026-11-18)
+
+* use prebuild python 3.12.16
+
 # 3.12.10 (2025-05-11)
 
 * use prebuild python 3.12.10
